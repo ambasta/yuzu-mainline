@@ -268,7 +268,7 @@ void ARM_Unicorn::RecordBreak(GDBStub::BreakpointAddress bkpt) {
 
 void ARM_Unicorn::InterruptHook(uc_engine* uc, u32 int_no, void* user_data) {
     u32 esr{};
-    CHECKED(uc_reg_read(uc, UC_ARM64_REG_ESR, &esr));
+    CHECKED(uc_reg_read(uc, UC_ARM64_REG_LR, &esr));
 
     const auto ec = esr >> 26;
     const auto iss = esr & 0xFFFFFF;

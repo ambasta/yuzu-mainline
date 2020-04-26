@@ -32,12 +32,6 @@ add_custom_command(OUTPUT scm_rev.cpp
     DEPENDS
       # WARNING! It was too much work to try and make a common location for this list,
       # so if you need to change it, please update CMakeModules/GenerateSCMRev.cmake as well
-      "${VIDEO_CORE}/renderer_opengl/gl_shader_cache.cpp"
-      "${VIDEO_CORE}/renderer_opengl/gl_shader_cache.h"
-      "${VIDEO_CORE}/renderer_opengl/gl_shader_decompiler.cpp"
-      "${VIDEO_CORE}/renderer_opengl/gl_shader_decompiler.h"
-      "${VIDEO_CORE}/renderer_opengl/gl_shader_disk_cache.cpp"
-      "${VIDEO_CORE}/renderer_opengl/gl_shader_disk_cache.h"
       "${VIDEO_CORE}/shader/decode/arithmetic.cpp"
       "${VIDEO_CORE}/shader/decode/arithmetic_half.cpp"
       "${VIDEO_CORE}/shader/decode/arithmetic_half_immediate.cpp"
@@ -125,9 +119,6 @@ add_library(common STATIC
     math_util.h
     memory_hook.cpp
     memory_hook.h
-    microprofile.cpp
-    microprofile.h
-    microprofileui.h
     misc.cpp
     multi_level_queue.h
     page_table.cpp

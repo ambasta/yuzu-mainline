@@ -605,12 +605,13 @@ endif()
 
 create_target_directory_groups(core)
 
+find_package(nlohmann_json REQUIRED)
 target_link_libraries(core PUBLIC common PRIVATE audio_core video_core)
-target_link_libraries(core PUBLIC Boost::boost PRIVATE fmt json-headers mbedtls opus unicorn)
+target_link_libraries(core PUBLIC Boost::boost fmt nlohmann_json mbedtls opus unicorn)
 
 if (YUZU_ENABLE_BOXCAT)
     target_compile_definitions(core PRIVATE -DYUZU_ENABLE_BOXCAT)
-    target_link_libraries(core PRIVATE httplib json-headers zip)
+    target_link_libraries(core PRIVATE httplib nlohmann_json zip)
 endif()
 
 if (ENABLE_WEB_SERVICE)

@@ -2,7 +2,9 @@
 // Licensed under GPLv2 or any later version
 // Refer to the license.txt file included.
 
+#ifdef ENABLE_MICROPROFILE
 #include "common/microprofile.h"
+#endif
 #include "core/core.h"
 #include "core/memory.h"
 #include "video_core/dma_pusher.h"
@@ -16,11 +18,14 @@ DmaPusher::DmaPusher(Core::System& system, GPU& gpu) : gpu{gpu}, system{system} 
 
 DmaPusher::~DmaPusher() = default;
 
+#ifdef ENABLE_MICROPROFILE
 MICROPROFILE_DEFINE(DispatchCalls, "GPU", "Execute command buffer", MP_RGB(128, 128, 192));
+#endif
 
 void DmaPusher::DispatchCalls() {
+#ifdef ENABLE_MICROPROFILE
     MICROPROFILE_SCOPE(DispatchCalls);
-
+#endif
     gpu.SyncGuestHost();
     // On entering GPU code, assume all memory may be touched by the ARM core.
     gpu.Maxwell3D().OnMemoryWrite();

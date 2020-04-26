@@ -5,7 +5,11 @@
 #include "common/algorithm.h"
 #include "common/assert.h"
 #include "common/common_types.h"
+
+#ifdef ENABLE_MICROPROFILE
 #include "common/microprofile.h"
+#endif
+
 #include "video_core/memory_manager.h"
 #include "video_core/texture_cache/surface_base.h"
 #include "video_core/texture_cache/surface_params.h"
@@ -13,8 +17,10 @@
 
 namespace VideoCommon {
 
+#ifdef ENABLE_MICROPROFILE
 MICROPROFILE_DEFINE(GPU_Load_Texture, "GPU", "Texture Load", MP_RGB(128, 192, 128));
 MICROPROFILE_DEFINE(GPU_Flush_Texture, "GPU", "Texture Flush", MP_RGB(128, 192, 128));
+#endif
 
 using Tegra::Texture::ConvertFromGuestToHost;
 using VideoCore::MortonSwizzleMode;
@@ -187,7 +193,9 @@ void SurfaceBaseImpl::SwizzleFunc(MortonSwizzleMode mode, u8* memory, const Surf
 
 void SurfaceBaseImpl::LoadBuffer(Tegra::MemoryManager& memory_manager,
                                  StagingCache& staging_cache) {
+#ifdef ENABLE_MICROPROFILE
     MICROPROFILE_SCOPE(GPU_Load_Texture);
+#endif
     auto& staging_buffer = staging_cache.GetBuffer(0);
     u8* host_ptr;
     // Use an extra temporal buffer
@@ -242,7 +250,9 @@ void SurfaceBaseImpl::LoadBuffer(Tegra::MemoryManager& memory_manager,
 
 void SurfaceBaseImpl::FlushBuffer(Tegra::MemoryManager& memory_manager,
                                   StagingCache& staging_cache) {
+#ifdef ENABLE_MICROPROFILE
     MICROPROFILE_SCOPE(GPU_Flush_Texture);
+#endif
     auto& staging_buffer = staging_cache.GetBuffer(0);
     u8* host_ptr;
 

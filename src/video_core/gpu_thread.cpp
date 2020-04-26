@@ -3,7 +3,9 @@
 // Refer to the license.txt file included.
 
 #include "common/assert.h"
+#ifdef ENABLE_MICROPROFILE
 #include "common/microprofile.h"
+#endif
 #include "core/core.h"
 #include "core/frontend/emu_window.h"
 #include "core/settings.h"
@@ -18,8 +20,9 @@ namespace VideoCommon::GPUThread {
 static void RunThread(Core::System& system, VideoCore::RendererBase& renderer,
                       Core::Frontend::GraphicsContext& context, Tegra::DmaPusher& dma_pusher,
                       SynchState& state) {
+#ifdef ENABLE_MICROPROFILE
     MicroProfileOnThreadCreate("GpuThread");
-
+#endif
     // Wait for first GPU command before acquiring the window context
     while (state.queue.Empty())
         ;

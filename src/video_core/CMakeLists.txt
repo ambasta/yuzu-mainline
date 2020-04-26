@@ -48,43 +48,6 @@ add_library(video_core STATIC
     rasterizer_interface.h
     renderer_base.cpp
     renderer_base.h
-    renderer_opengl/gl_buffer_cache.cpp
-    renderer_opengl/gl_buffer_cache.h
-    renderer_opengl/gl_device.cpp
-    renderer_opengl/gl_device.h
-    renderer_opengl/gl_fence_manager.cpp
-    renderer_opengl/gl_fence_manager.h
-    renderer_opengl/gl_framebuffer_cache.cpp
-    renderer_opengl/gl_framebuffer_cache.h
-    renderer_opengl/gl_rasterizer.cpp
-    renderer_opengl/gl_rasterizer.h
-    renderer_opengl/gl_resource_manager.cpp
-    renderer_opengl/gl_resource_manager.h
-    renderer_opengl/gl_sampler_cache.cpp
-    renderer_opengl/gl_sampler_cache.h
-    renderer_opengl/gl_shader_cache.cpp
-    renderer_opengl/gl_shader_cache.h
-    renderer_opengl/gl_shader_decompiler.cpp
-    renderer_opengl/gl_shader_decompiler.h
-    renderer_opengl/gl_shader_disk_cache.cpp
-    renderer_opengl/gl_shader_disk_cache.h
-    renderer_opengl/gl_shader_manager.cpp
-    renderer_opengl/gl_shader_manager.h
-    renderer_opengl/gl_shader_util.cpp
-    renderer_opengl/gl_shader_util.h
-    renderer_opengl/gl_state_tracker.cpp
-    renderer_opengl/gl_state_tracker.h
-    renderer_opengl/gl_stream_buffer.cpp
-    renderer_opengl/gl_stream_buffer.h
-    renderer_opengl/gl_texture_cache.cpp
-    renderer_opengl/gl_texture_cache.h
-    renderer_opengl/gl_query_cache.cpp
-    renderer_opengl/gl_query_cache.h
-    renderer_opengl/maxwell_to_gl.h
-    renderer_opengl/renderer_opengl.cpp
-    renderer_opengl/renderer_opengl.h
-    renderer_opengl/utils.cpp
-    renderer_opengl/utils.h
     sampler_cache.cpp
     sampler_cache.h
     shader/decode/arithmetic.cpp

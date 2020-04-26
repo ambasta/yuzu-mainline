@@ -4,11 +4,15 @@
 
 #include "common/assert.h"
 #include "common/logging/log.h"
+#ifdef ENABLE_MICROPROFILE
 #include "common/microprofile.h"
+#endif
 #include "video_core/engines/maxwell_3d.h"
 #include "video_core/macro_interpreter.h"
 
+#ifdef ENABLE_MICROPROFILE
 MICROPROFILE_DEFINE(MacroInterp, "GPU", "Execute macro interpreter", MP_RGB(128, 128, 192));
+#endif
 
 namespace Tegra {
 namespace {
@@ -86,7 +90,9 @@ union MacroInterpreter::Opcode {
 MacroInterpreter::MacroInterpreter(Engines::Maxwell3D& maxwell3d) : maxwell3d(maxwell3d) {}
 
 void MacroInterpreter::Execute(u32 offset, std::size_t num_parameters, const u32* parameters) {
+#ifdef ENABLE_MICROPROFILE
     MICROPROFILE_SCOPE(MacroInterp);
+#endif
     Reset();
 
     registers[1] = parameters[0];

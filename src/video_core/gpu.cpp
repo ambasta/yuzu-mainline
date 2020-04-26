@@ -3,7 +3,9 @@
 // Refer to the license.txt file included.
 
 #include "common/assert.h"
+#ifdef ENABLE_MICROPROFILE
 #include "common/microprofile.h"
+#endif
 #include "core/core.h"
 #include "core/core_timing.h"
 #include "core/core_timing_util.h"
@@ -21,7 +23,9 @@
 
 namespace Tegra {
 
+#ifdef ENABLE_MICROPROFILE
 MICROPROFILE_DEFINE(GPU_wait, "GPU", "Wait for the GPU", MP_RGB(128, 128, 192));
+#endif
 
 GPU::GPU(Core::System& system, std::unique_ptr<VideoCore::RendererBase>&& renderer_, bool is_async)
     : system{system}, renderer{std::move(renderer_)}, is_async{is_async} {
@@ -74,9 +78,11 @@ void GPU::WaitFence(u32 syncpoint_id, u32 value) {
     if (!is_async) {
         return;
     }
+#ifdef ENABLE_MICROPROFILE
     MICROPROFILE_SCOPE(GPU_wait);
+#endif
     std::unique_lock lock{sync_mutex};
-    sync_cv.wait(lock, [=]() { return syncpoints[syncpoint_id].load() >= value; });
+    sync_cv.wait(lock, [=, this]() { return syncpoints[syncpoint_id].load() >= value; });
 }
 
 void GPU::IncrementSyncPoint(const u32 syncpoint_id) {

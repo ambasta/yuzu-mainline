@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.7)
-
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/externals/cmake-modules")
+
 include(DownloadExternals)
 include(CMakeDependentOption)
+include(FindPkgConfig)
 
 project(yuzu)
 
@@ -16,7 +16,6 @@ option(ENABLE_QT "Enable the Qt frontend" ON)
 CMAKE_DEPENDENT_OPTION(YUZU_USE_BUNDLED_QT "Download bundled Qt binaries" ON "ENABLE_QT;MSVC" OFF)
 
 option(ENABLE_WEB_SERVICE "Enable web services (telemetry, etc.)" ON)
-
 option(YUZU_USE_BUNDLED_UNICORN "Build/Download bundled Unicorn" ON)
 
 option(YUZU_USE_QT_WEB_ENGINE "Use QtWebEngine for web applet implementation" OFF)
@@ -112,7 +111,7 @@ message(STATUS "Target architecture: ${ARCHITECTURE}")
 # Configure C++ standard
 # ===========================
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # System imported libraries
@@ -231,7 +230,11 @@ if (YUZU_USE_BUNDLED_UNICORN)
         unset(UNICORN_LIB_NAME)
     endif()
 else()
-    find_package(Unicorn REQUIRED)
+    find_package(Unicorn QUIET)
+
+    if (NOT UNICORN_FOUND)
+        pkg_check_modules(UNICORN REQUIRED unicorn)
+    endif (NOT UNICORN_FOUND)
 endif()
 
 if (UNICORN_FOUND)
@@ -365,7 +368,6 @@ add_definitions(-DBOOST_ERROR_CODE_HEADER_ONLY
 )
 
 enable_testing()
-add_subdirectory(externals)
 add_subdirectory(src)
 
 # Set yuzu project or yuzu-cmd project as default StartUp Project in Visual Studio depending on whether QT is enabled or not

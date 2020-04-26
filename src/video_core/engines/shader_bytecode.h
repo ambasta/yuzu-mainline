@@ -649,6 +649,8 @@ enum class ShfXmode : u64 {
 };
 
 union Instruction {
+    constexpr Instruction(const Instruction& rhs) = default;
+
     constexpr Instruction& operator=(const Instruction& instr) {
         value = instr.value;
         return *this;
